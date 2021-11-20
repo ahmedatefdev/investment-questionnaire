@@ -1,0 +1,9 @@
+body::before {
+  display: block;
+  content: "";
+  height: 50px;
+  background-color: #212529;
+}
+.min-wrapper-hight {
+  min-height: calc(100vh - 112px);
+}
