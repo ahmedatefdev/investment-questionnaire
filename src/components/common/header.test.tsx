@@ -4,13 +4,13 @@ import Footer from "./footer";
 import Header from "./header";
 
 describe("Main Footer", () => {
-  it("should has by word ", async () => {
+  it("should Not Contain Home nav btn", async () => {
     render(
       <BrowserRouter>
         <Header />
       </BrowserRouter>
     );
-    const linkElement = await screen.findByTestId("homeBtn");
-    expect(linkElement).toBeInTheDocument();
+    const linkElement = screen.queryByTestId("homeBtn");
+    expect(linkElement).not.toBeInTheDocument();
   });
 });
