@@ -1,52 +1,61 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Home from "..";
 import { BrowserRouter, Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import Questions from ".";
+import { AppContextProvider } from "../../contexts";
 
 describe("Questions Page", () => {
-  it("page should generate first questions", () => {
+  it("page should generate first question", () => {
     const history = createMemoryHistory();
 
     render(
-      <Router location={history.location} navigator={history}>
-        <Questions />
-      </Router>
+      <AppContextProvider>
+        <Router location={history.location} navigator={history}>
+          <Questions />
+        </Router>
+      </AppContextProvider>
     );
 
-    // const buttonElement = screen.getByRole("button", {
-    //   name: /generate/i
-    // });
-    // expect(buttonElement).toBeInTheDocument();
+    const buttonElement = screen.getByText(/r B2B or both/i);
+    expect(buttonElement).toBeInTheDocument();
   });
 
   it("should show model if there answers without finish", () => {
     const history = createMemoryHistory();
 
     render(
-      <Router location={history.location} navigator={history}>
-        <Home />
-      </Router>
+      <AppContextProvider>
+        <Router location={history.location} navigator={history}>
+          <Questions />
+        </Router>
+      </AppContextProvider>
     );
-
-    // const buttonElement = screen.getByRole("button", {
-    //   name: /generate/i
-    // });
-
-    // fireEvent.click(buttonElement);
-
-    // expect(history.location.pathname).toBe("/questions");
-    // expect(buttonElement).toBeInTheDocument();
+    const alertMock = jest.spyOn(window, "alert").mockImplementation();
+    const buttonElement = screen.getByRole("button", {
+      name: /next/i
+    });
+    fireEvent.click(buttonElement);
+    expect(alertMock).toHaveBeenCalledTimes(1);
   });
 
-  it("should reset if all answers giving", () => {});
-  it("should go to result page on finish btn click", () => {});
-  it("should go back too previous question", () => {});
-  it("should go hide back btn on first question", () => {});
-  it("should have finish btn on finish", () => {});
-  it("should not move if not answer", () => {});
-  it("should show message of success if finish", () => {});
-  it("should be next question be disable if click", () => {});
-  
+  it("should go to result page on finish flag is true", () => {
+    const history = createMemoryHistory();
+
+    render(
+      <AppContextProvider
+        store={{
+          setCurrentQuestionsIds: jest.fn(),
+          setFinish: jest.fn(),
+          initQuestionary: jest.fn(),
+          finish: true,
+          answers: [{ answerId: 1, questionId: 2 }]
+        }}>
+        <Router location={history.location} navigator={history}>
+          <Questions />
+        </Router>
+      </AppContextProvider>
+    );
+    expect(history.location.pathname).toEqual("/result");
+  });
 });

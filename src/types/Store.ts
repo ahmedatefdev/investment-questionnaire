@@ -1,7 +1,8 @@
-import { Answer } from ".";
-interface AnsweredQuestion {
+import { IAnswer, IQuestion } from ".";
+export interface AnsweredQuestion {
   questionId: number;
   answerId: number;
+  answerValue?: any;
 }
 
 interface Store {
@@ -9,10 +10,16 @@ interface Store {
   currentQuestionsIds: number[];
   answers: AnsweredQuestion[];
 
-  currentAnswers: Answer[];
+  currentAnswers: AnsweredQuestion[];
   setCurrentQuestionsIds: (ids: number[]) => void;
-  setCurrentAnswers: (answers: Answer[]) => void;
   setAnswers: (answers: any) => void;
   setFinish: (finish: boolean) => void;
+  onChangeCurrentAnswers: (
+    question: IQuestion,
+    answer: IAnswer,
+    answerValue?: any
+  ) => void;
+  MoveNext: () => void;
+  initQuestionary: () => void;
 }
 export default Store;

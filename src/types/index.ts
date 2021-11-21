@@ -4,16 +4,18 @@ export enum AnswerType {
   NUMBER_INPUT
 }
 
-export interface Answer {
+export interface IAnswer {
   id: number;
   text?: string;
   questionsIdToOpen: number[];
 }
 
-export interface Question {
-  question: string;
+export interface IQuestion {
+  id: number;
+  text: string;
   answerType: AnswerType;
   NextQuestionsIds?: number[];
-  answers?: Answer[];
+  answers?: IAnswer[];
   MainQuestion?: boolean;
+  ChildQuestionIds?: number[];
 }

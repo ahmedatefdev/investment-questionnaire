@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Page from "../components/page";
+import { useAppContext } from "../contexts";
 import HomeImg from "../static/img/homeimg.svg";
 import AddIcon from "../static/img/plus-square-fill.svg";
 interface Props {}
 
 const Home = (props: Props) => {
+  const { initQuestionary } = useAppContext();
+  useEffect(() => {
+    initQuestionary!();
+  }, []);
   return (
     <Page>
       <div className='d-flex justify-content-center align-items-center flex-column  bg-dark min-wrapper-hight m-auto '>
