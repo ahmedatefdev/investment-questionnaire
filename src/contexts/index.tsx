@@ -83,14 +83,6 @@ export const AppContextProvider: React.FC<Props> = ({ children, store }) => {
         ...answers,
         ...currentAnswers
       ]);
-      // const payload = { questionary: getCurrentFullAnswers(answers) };
-      console.log(
-        "🚀 ~ file: index.tsx ~ line 84 ~ MoveNext ~ questionary",
-        questionary
-      );
-      // var data = new FormData();
-      // data.append("json", JSON.stringify(payload));
-
       fetch(
         `https://${process.env.REACT_APP_MOCK_SECRET_CODE}.mockapi.io/result`,
         {

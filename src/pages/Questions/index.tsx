@@ -14,8 +14,6 @@ const Questions = (props: Props) => {
     useAppContext();
   const navigate = useNavigate();
   useEffect(() => {
-    // setCurrentQuestionsIds!([QUESTIONS_DATA[0].id]);
-    // setFinish!(false);
     initQuestionary!();
     return () => {
       setFinish!(false);
@@ -23,7 +21,6 @@ const Questions = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    // setCurrentQuestionsIds!([QUESTIONS_DATA[0].id]);
     if (finish && answers?.length) {
       navigate("/result");
     }
