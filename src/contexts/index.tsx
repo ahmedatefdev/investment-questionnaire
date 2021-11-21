@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useState } from "react";
 import QUESTIONS_DATA, { ANSWERS_DATA } from "../data/questionsData";
+import { getCurrentFullAnswers } from "../lib/getCurrentFullAnswers";
 import { IAnswer, IQuestion } from "../types";
 import Store, { AnsweredQuestion } from "../types/Store";
 
@@ -77,7 +78,39 @@ export const AppContextProvider: React.FC<Props> = ({ children, store }) => {
 
     let newIds: number[] = getNewQuestionsIds();
 
-    if (!newIds.length) return setFinish(true);
+    if (!newIds.length) {
+      const questionary = getCurrentFullAnswers([
+        ...answers,
+        ...currentAnswers
+      ]);
+      // const payload = { questionary: getCurrentFullAnswers(answers) };
+      console.log(
+        "🚀 ~ file: index.tsx ~ line 84 ~ MoveNext ~ questionary",
+        questionary
+      );
+      // var data = new FormData();
+      // data.append("json", JSON.stringify(payload));
+
+      fetch(
+        `https://${process.env.REACT_APP_MOCK_SECRET_CODE}.mockapi.io/result`,
+        {
+          method: "post",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ questionary })
+        }
+      )
+        .then(function (res) {
+          return res.json();
+        })
+        .then(function (data) {
+          console.log(JSON.stringify(data));
+        })
+        .catch((e) => console.log("e>>>", e));
+      return setFinish(true);
+    }
 
     setCurrentQuestionsIds(newIds);
     setCurrentAnswers([]);
