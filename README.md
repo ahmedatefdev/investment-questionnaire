@@ -1,6 +1,9 @@
-# Getting Started with Create React App
+# Getting Started with investment-questionnaire
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+(**OPTIONAL**) this app use mockapi.io as an api if you want to save the data you have to
+
+- create an mockapi.io account
+- create .env file with REACT_APP_MOCK_SECRET_CODE as key name and add teh secret to it
 
 ## Available Scripts
 
